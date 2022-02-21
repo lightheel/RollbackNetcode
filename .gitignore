@@ -1,0 +1,33 @@
+# Godot-specific ignores
+isotope_project/.import/
+export.cfg
+
+# Imported translations (automatically generated from CSV files)
+*.translation
+
+# Mono-specific ignores
+.mono/
+data_*/
+
+# Our Art and Media that git doesn't need to hold onto
+isotope_project/src/*
+
+# local player data files
+isotope_project/inventory.json
+isotope_project/data/*
+
+# user's local vscode settings
+.vscode/settings.json
+
+# export folder
+build
+
+# test data
+isotope_project/slope_data.json
+
+# python virtual environment
+.venv
+
+# godot log folder
+logs
+isotope_project/logs
