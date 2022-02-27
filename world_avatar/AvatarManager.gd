@@ -5,6 +5,10 @@ extends Node
 var world_avatar = null
 var avatars := {}
 
+var frame := 0
+var local_target := 0
+#var input_buffer := []
+
 func _ready():
 	Game.connect('scene_changed', self, 'scene_changed')
 	Network.connect('peer_connected', self, 'create_peer')
@@ -23,6 +27,8 @@ func scene_changed():
 	if Network.connected:
 		for id in Network.playerRegistry:
 			create_peer(Network.playerRegistry[id])
+		if !Network.isServer:
+			rpc_id(1, "server_init")
 	else:
 		create_peer(Network.player_info)
 
@@ -105,30 +111,44 @@ func clear_input():
 
 # only used by local player
 func handle_input(event):
+	if Network.isServer:
+		return
+
+	var client_input_info := {}
+
 	if Network.net_id in avatars:
 		avatars[Network.net_id].handle_input(event)
 
 		if event.action in input_map:
-			send_input(Network.net_id, event)
+			client_input_info = {
+				'id': Network.net_id, 
+				'frame': (frame + local_target), 
+				'event': event.action
+			}
+		
+		if client_input_info:
+			#input_buffer.append(client_input_info)
+			send_input(Network.net_id, client_input_info)
 
 # ------------------------------------------------------------------------------
 
-func send_input(id, event):
+func send_input(id, client_input_info):
 	if Network.connected:
-		rpc_id(1, 'broadcast_input', id, event.to_dict())
+		rpc_id(1, 'broadcast_input', client_input_info.id, client_input_info)
 
 # happens on the server
-remote func broadcast_input(id, event_dict):
-	recieve_input(id, event_dict)
-	rpc('recieve_input', id, event_dict)
+remote func broadcast_input(id, client_input_info):
+	recieve_input(id, client_input_info)
+	rpc('recieve_input', id, client_input_info)
 
 # happens back on each client
-remote func recieve_input(id, event_dict):
+remote func recieve_input(id, client_input_info):
 	if id == Network.net_id:
 		return
-	var event = FakeEvent.new().from_dict(event_dict)
-	if id in avatars:
-		avatars[id].handle_input(event)
+	var event = client_input_info.event
+	if client_input_info.frame == frame:
+		if id in avatars:
+			avatars[id].handle_input(event)
 
 # ******************************************************************************
 
@@ -159,6 +179,8 @@ var server_rate = RateLimiter.new(0.5)
 var states = {}
 
 func _physics_process(delta):
+	frame = Engine.get_physics_frames()
+
 	if !Network.connected:
 		return
 
@@ -187,3 +209,33 @@ remote func receive_sync_packet(packet):
 			return
 		if id in avatars and is_instance_valid(avatars[id]):
 			avatars[id].set_state(packet[id])
+
+# ************************************************************************ 
+# Sets up frame timing on local/server - sets RTT delay for inputs
+
+remote func server_init():
+	var id = get_tree().get_rpc_sender_id()
+	send_init_reply(id)
+
+func send_init_reply(id):
+	rpc_id(id, 'receive_server_reply', frame)
+
+remote func receive_server_reply(rtt_server_frame):
+	var local_frame_cache = rtt_server_frame
+	client_rtt_reply(local_frame_cache)
+
+func client_rtt_reply(local_frame_cache):
+	rpc_id(1, 'server_rtt_reply', local_frame_cache)
+
+remote func server_rtt_reply(local_frame_cache):
+	var id = get_tree().get_rpc_sender_id()
+	var rtt_frame = frame - local_frame_cache
+	var target_frame = rtt_frame + frame + 5
+	var rtt_info = {'rtt': rtt_frame, 'frame': target_frame}
+	rpc_id(id, 'set_client_timing', rtt_info)
+
+remote func set_client_timing(rtt_info):
+	frame = rtt_info.frame
+	local_target = rtt_info.rtt
+	Console.write_line('local frame:' + str(frame))
+	Console.write_line('local target:' + str(local_target))
