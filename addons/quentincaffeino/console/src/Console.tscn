@@ -79,8 +79,8 @@ __meta__ = {
 }
 
 [node name="ConsoleText" type="RichTextLabel" parent="ConsoleBox/Container"]
-margin_right = 476.0
-margin_bottom = 117.0
+margin_right = 1020.0
+margin_bottom = 272.0
 focus_neighbour_left = NodePath("../LineEdit")
 focus_neighbour_top = NodePath("../LineEdit")
 focus_neighbour_right = NodePath("../LineEdit")
@@ -96,15 +96,15 @@ custom_styles/normal = SubResource( 8 )
 bbcode_enabled = true
 
 [node name="HSeparator" type="HSeparator" parent="ConsoleBox/Container"]
-margin_top = 117.0
-margin_right = 476.0
-margin_bottom = 121.0
+margin_top = 272.0
+margin_right = 1020.0
+margin_bottom = 276.0
 custom_styles/separator = SubResource( 5 )
 
 [node name="ConsoleLine" type="LineEdit" parent="ConsoleBox/Container"]
-margin_top = 121.0
-margin_right = 476.0
-margin_bottom = 131.0
+margin_top = 276.0
+margin_right = 1020.0
+margin_bottom = 296.0
 focus_neighbour_left = NodePath(".")
 focus_neighbour_top = NodePath(".")
 focus_neighbour_right = NodePath(".")

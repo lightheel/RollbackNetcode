@@ -1,0 +1,132 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://world_avatar/WorldAvatarDanceSprites.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://assets/fonts/Silverfinster.tres" type="DynamicFont" id=3]
+[ext_resource path="res://world_avatar/WorldAvatar.gd" type="Script" id=5]
+[ext_resource path="res://world_avatar/WorldAvatarInteractors.gd" type="Script" id=6]
+[ext_resource path="res://assets/sound/environment/footstep_factory_cyber_4.wav" type="AudioStream" id=10]
+[ext_resource path="res://world_avatar/WorldAvatarMovement.gd" type="Script" id=16]
+[ext_resource path="res://assets/characters/ash/world_avatar/ash_all_walks.png" type="Texture" id=20]
+[ext_resource path="res://assets/characters/ash/world_avatar/ash_all_walks_normal.png" type="Texture" id=21]
+[ext_resource path="res://world_avatar/Body.gd" type="Script" id=22]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 14.0
+height = 0.0
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 1.0
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 35.0
+
+[node name="WorldAvatar" type="KinematicBody2D"]
+scale = Vector2( 0.5, 0.5 )
+collision_layer = 4
+collision_mask = 3
+script = ExtResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Movement" type="Node2D" parent="."]
+script = ExtResource( 16 )
+
+[node name="TileDetector" type="Area2D" parent="."]
+collision_layer = 512
+collision_mask = 512
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileDetector"]
+shape = SubResource( 2 )
+
+[node name="Interactors" type="Node2D" parent="."]
+visible = false
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Ray1" type="RayCast2D" parent="Interactors"]
+enabled = true
+cast_to = Vector2( 75, 0 )
+collision_mask = 1024
+collide_with_areas = true
+
+[node name="Ray2" type="RayCast2D" parent="Interactors"]
+enabled = true
+cast_to = Vector2( 70, 25 )
+collision_mask = 1024
+collide_with_areas = true
+
+[node name="Ray3" type="RayCast2D" parent="Interactors"]
+enabled = true
+cast_to = Vector2( 70, -25 )
+collision_mask = 1024
+collide_with_areas = true
+
+[node name="Ray4" type="RayCast2D" parent="Interactors"]
+enabled = true
+cast_to = Vector2( 45, 40 )
+collision_mask = 1024
+collide_with_areas = true
+
+[node name="Ray5" type="RayCast2D" parent="Interactors"]
+enabled = true
+cast_to = Vector2( 45, -40 )
+collision_mask = 1024
+collide_with_areas = true
+
+[node name="Area2D" type="Area2D" parent="Interactors"]
+collision_layer = 1024
+collision_mask = 1024
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactors/Area2D"]
+shape = SubResource( 3 )
+
+[node name="FootstepSound1" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 10 )
+max_distance = 500.0
+
+[node name="FootstepSound2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 10 )
+max_distance = 500.0
+
+[node name="Nameplate" type="Label" parent="."]
+margin_left = -52.8578
+margin_top = -142.828
+margin_right = 53.1422
+margin_bottom = -125.828
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 1
+custom_fonts/font = ExtResource( 3 )
+text = "Player"
+align = 1
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Back" type="Node2D" parent="."]
+position = Vector2( 0, -52 )
+scale = Vector2( 2, 2 )
+
+[node name="Body" type="Sprite" parent="."]
+position = Vector2( 0, -52 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 20 )
+normal_map = ExtResource( 21 )
+hframes = 7
+vframes = 8
+script = ExtResource( 22 )
+
+[node name="Front" type="Node2D" parent="."]
+position = Vector2( 0, -52 )
+scale = Vector2( 2, 2 )
+
+[node name="DanceBody" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( 0, -52 )
+scale = Vector2( 2, 2 )
+frames = ExtResource( 1 )
+frame = 2

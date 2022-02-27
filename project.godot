@@ -23,11 +23,17 @@ _global_script_classes=[ {
 "class": "RateLimiter",
 "language": "GDScript",
 "path": "res://system/RateLimiter.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "WorldAvatar",
+"language": "GDScript",
+"path": "res://world_avatar/WorldAvatar.gd"
 } ]
 _global_script_class_icons={
 "Eval": "",
 "FakeEvent": "",
-"RateLimiter": ""
+"RateLimiter": "",
+"WorldAvatar": ""
 }
 
 [application]
@@ -47,6 +53,8 @@ Network="*res://system/Network.gd"
 Utils="*res://system/Utils.gd"
 HyperLog="*res://addons/hyperlog/hyperlog.tscn"
 ConsoleCommands="*res://system/ConsoleCommands.gd"
+AvatarManager="*res://world_avatar/AvatarManager.gd"
+Player="*res://player/Player.tscn"
 
 [debug]
 
@@ -54,7 +62,7 @@ gdscript/warnings/unused_variable=false
 gdscript/warnings/unused_argument=false
 gdscript/warnings/unused_signal=false
 gdscript/warnings/return_value_discarded=false
-multirun/server/number_of_windows=2
+multirun/server/number_of_windows=3
 multirun/server/window_distance=1270
 multirun/server/add_custom_args=true
 multirun/server/first_window_args="--server"
@@ -89,6 +97,41 @@ quentincaffeino_console_history_up={
 quentincaffeino_console_history_down={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777234,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+move_up={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+move_left={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+move_right={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+move_down={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+run={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777237,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+dance={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":75,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+emote={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":76,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 

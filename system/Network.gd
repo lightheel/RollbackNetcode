@@ -216,17 +216,15 @@ func _on_connection_failed():
 
 # Client disconnected from server
 func _on_disconnected_from_server():
+	if !OS.has_feature("standalone"):
+		get_tree().quit()
+		return
+	
 	Log("disconnected from server")
 	get_tree().set_network_peer(null)
 	emit_signal("disconnected_from_server")
 	playerRegistry.clear()
 	player_info.net_id = 0
-	
-	if !OS.has_feature("standalone"):
-		get_tree().quit()
-
-	if !Game.returningToMenu:
-		Game.load_scene('mainMenu')
 
 # Client recieves server info from server
 remote func recieve_server_info(sinfo):

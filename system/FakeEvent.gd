@@ -30,3 +30,6 @@ func from_dict(dict):
 	action = dict.action
 	pressed = dict.pressed
 	return self
+
+func _to_string():
+	return '[FakeEvent:RID] <%s, %s>' % [action, pressed]

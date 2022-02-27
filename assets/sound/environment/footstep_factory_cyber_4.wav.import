@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/footstep_factory_cyber_4.wav-806ba491ca6535ba81224a129f0a74fd.sample"
+
+[deps]
+
+source_file="res://assets/sound/environment/footstep_factory_cyber_4.wav"
+dest_files=[ "res://.import/footstep_factory_cyber_4.wav-806ba491ca6535ba81224a129f0a74fd.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
