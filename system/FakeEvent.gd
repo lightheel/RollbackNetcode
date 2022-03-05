@@ -7,6 +7,7 @@ class_name FakeEvent
 
 var action = ''
 var pressed = false
+var frame = 0
 
 func _init(name='', value=false):
 	action = name
@@ -24,6 +25,7 @@ func to_dict():
 	return {
 		'action': action,
 		'pressed': pressed,
+		'frame': frame,
 	}
 
 func from_dict(dict):

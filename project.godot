@@ -73,6 +73,10 @@ multirun/client/add_custom_args=true
 multirun/client/first_window_args="--connect"
 multirun/client/other_window_args="--server"
 
+[editor]
+
+main_run_args="--server"
+
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/hyperlog/plugin.cfg", "res://addons/multirun/plugin.cfg", "res://addons/quentincaffeino/console/plugin.cfg" )
